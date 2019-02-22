@@ -1,0 +1,35 @@
+{
+  "name": "hw-nytgooglebooksearch",
+  "version": "1.0.0",
+  "description": "NYT Google Book Search, powered by a MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "Erik G Jackson",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.4",
+    "if-env": "^1.0.4",
+    "jquery": "^3.3.1",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.13",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.7"
+  },
+  "keywords": []
+}

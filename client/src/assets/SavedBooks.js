@@ -40,7 +40,15 @@ class SavedBooks extends React.Component {
         })
     }
     deleter(e){
-        console.log(e.target);
+        const btn = e.target;
+        var ident= $(btn).attr('ident');
+        $.ajax({
+            url:'/api/books/' + ident,
+            type: 'DELETE',
+            success: (response) => console.log("Deleted" + response),
+            fail:(response) => console.log("Uh oh..." + response)
+        })
+        // $.delete('/api/books/' + ident, ident, (data) =>console.log(data))
         //call to delete book
     }
 

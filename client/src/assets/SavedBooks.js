@@ -4,7 +4,7 @@ import $ from 'jquery';
 let list = []
 class SavedBooks extends React.Component {
     state = {
-        num: list.length,
+        num: 0,
         saved: list
     }
     componentDidMount(){
@@ -35,23 +35,27 @@ class SavedBooks extends React.Component {
                 )
             })
             this.setState({
+                num: list.length,
                 saved: list
             });
         })
     }
     deleter(e){
         const btn = e.target;
-        var ident= $(btn).attr('ident');
+        const ident= $(btn).attr('ident');
+        const oldNum = this.state.num;
+        console.log("oldNum = ", oldNum)
+        const stateSetter = (res) => {
+            const newNum = oldNum - 1;
+            this.setState({num: newNum});
+            this.componentDidMount();
+        };
+
         $.ajax({
             url:'/api/books/' + ident,
             type: 'DELETE',
-            success: () => {
-                const newNum = this.state.num - 1;
-                this.setState({
-                    num: (newNum)
-                })
-            },
-            fail:(response) => console.log(response)
+            success: (res) => stateSetter(res),
+            fail:function(response){console.log(response)}
         })
     }
 

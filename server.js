@@ -1,7 +1,7 @@
 // const $ = require('jquery');
 const express = require('express');
 const path = require('path');
-const mongo = require('mongodb');
+const mongojs = require('mongojs');
 const mongoose = require('mongoose');
 var logger = require('morgan');
 const axios = require('axios');
@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(logger("dev"))
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, {newUrlParser:true});
 
 const dbRoute = require(path.join(__dirname, "./models/book.js"))
 
@@ -41,8 +41,21 @@ app.post('/api/books', (req, res) => {
     }).catch(err => {throw err;})
 })
 
-app.get('/api/books/:id', (req, res) => {
+app.delete('/api/books/:id', (req, res) => {
     //delete book
+    const bookId = req.params.id
+
+    // dbRoute.SavedBooks.getOne({_id:bookId}, function(err, data){
+    //     if (err) throw err;
+    //     data.bookId = undefined;
+    //     data.save();
+    // })
+
+    dbRoute.find({_id: bookId}, {justOne: true}).deleteOne((err,response) => {
+        console.log(response)
+        if(err){throw err}
+        else res.send('Done');
+    })
 })
 
 app.use('*', (req, res) => {

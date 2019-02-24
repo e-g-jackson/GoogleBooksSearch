@@ -12,15 +12,15 @@ class SavedBooks extends React.Component {
             console.log(data)
             list = data.map((x) =>{
                 return(
-                    <li className = "listedItem row" key = {x.id}>
+                    <li className = "listedItem row mb-4" key = {x.id}>
                     <div className = "col-2">
                         <img alt = {x.title} src = {x.image} />
                     </div>
                     <div className = "col-10">
-                        <div className = "d-inline-flex">
+                        <div className = "d-inline">
                             <h3>{x.title}</h3>
                             <button 
-                                className = "saveBtn btn btn-sm btn-success" 
+                                className = "saveBtn btn btn-sm btn-success float-right" 
                                 onClick = {event => this.deleter(event)}
                                 ident = {x.id}
                                 title = {x.title}
@@ -45,8 +45,8 @@ class SavedBooks extends React.Component {
         $.ajax({
             url:'/api/books/' + ident,
             type: 'DELETE',
-            success: (response) => console.log("Deleted" + response),
-            fail:(response) => console.log("Uh oh..." + response)
+            success: (response) => console.log(response),
+            fail:(response) => console.log(response)
         })
         // $.delete('/api/books/' + ident, ident, (data) =>console.log(data))
         //call to delete book

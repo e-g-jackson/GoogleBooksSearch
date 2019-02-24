@@ -28,10 +28,10 @@ class Results extends React.Component {
                     <img alt = {x.title} src = {x.image} />
                 </div>
                 <div className = "col-10">
-                    <div className = "d-inline-flex">
+                    <div className = "d-inline">
                         <h3>{x.title}</h3>
                         <button 
-                            className = "saveBtn btn btn-sm btn-success" 
+                            className = "saveBtn btn btn-sm btn-success float-right" 
                             onClick = {(event) => this.props.saver(event)}
                             ident = {x.id}
                             title = {x.title}

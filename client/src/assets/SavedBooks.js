@@ -1,11 +1,11 @@
 import React from 'react';
-// import Results from './Results'
 import $ from 'jquery';
 
 let list = []
 class SavedBooks extends React.Component {
     state = {
-        saved: list,
+        num: list.length,
+        saved: list
     }
     componentDidMount(){
         $.get('/api/books', (data) => {
@@ -45,11 +45,14 @@ class SavedBooks extends React.Component {
         $.ajax({
             url:'/api/books/' + ident,
             type: 'DELETE',
-            success: (response) => console.log(response),
+            success: () => {
+                const newNum = this.state.num - 1;
+                this.setState({
+                    num: (newNum)
+                })
+            },
             fail:(response) => console.log(response)
         })
-        // $.delete('/api/books/' + ident, ident, (data) =>console.log(data))
-        //call to delete book
     }
 
     render(){

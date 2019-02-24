@@ -21,9 +21,7 @@ class SearchBar extends React.Component {
     search = () => {
         const search = $("#bookSearch").val().trim();
         $.get("https://www.googleapis.com/books/v1/volumes?q=" + search, function (data) {
-            // + "&key=" + this.state.key
             list = data.items;
-            // console.log(list)
         }, "json").done(() => {
             this.setState({results: list})
         }).fail(() => alert('Something went wrong, try again!'))
@@ -38,7 +36,6 @@ class SearchBar extends React.Component {
             image: $(btn).attr("image"),
             description: $(btn).attr("desc")
         };
-        console.log(bookData);
         $.post(window.location.href + "./api/books", bookData, (response) => {
             console.log(response);
         })

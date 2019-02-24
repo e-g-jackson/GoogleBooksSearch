@@ -1,5 +1,6 @@
 // const $ = require('jquery');
 const express = require('express');
+const Router = express.Router()
 const path = require('path');
 const mongojs = require('mongojs');
 const mongoose = require('mongoose');
@@ -16,7 +17,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(logger("dev"))
 
-mongoose.connect(MONGODB_URI, {newUrlParser:true});
+mongoose.connect(MONGODB_URI);
 
 const dbRoute = require(path.join(__dirname, "./models/book.js"))
 
@@ -44,17 +45,30 @@ app.post('/api/books', (req, res) => {
 app.delete('/api/books/:id', (req, res) => {
     //delete book
     const bookId = req.params.id
-
-    // dbRoute.SavedBooks.getOne({_id:bookId}, function(err, data){
-    //     if (err) throw err;
-    //     data.bookId = undefined;
-    //     data.save();
+    
+    // dbRoute.find({_id: bookId}, {justOne: true}).then((response)=>{
+    //     console.log("Response is:")
+    //     console.log(response)
     // })
-
-    dbRoute.find({_id: bookId}, {justOne: true}).deleteOne((err,response) => {
-        console.log(response)
-        if(err){throw err}
-        else res.send('Done');
+    // dbRoute.find({_id: bookId}, {justOne: true}).remove((err, response) => {
+    //     console.log(response)
+    //     if(err){throw err}
+    //     else {res.send(JSON.stringify(response))};
+    // })
+    console.log('bookId = ', bookId)
+    // dbRoute.findByIdAndRemove({bookId})
+    //     .then((data)=>{
+    //         console.log('then')
+    //         console.log(data)
+    //         res.send(data)
+    //     }).catch((error) => {
+    //         console.log('catch')
+    //         console.log(error)
+    //         res.send(error)
+    //     });
+    dbRoute.remove({"id": bookId}, function(error, data){
+        if (error) throw error;
+        res.redirect('./saved')
     })
 })
 
